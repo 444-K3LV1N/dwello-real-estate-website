@@ -1,0 +1,3 @@
+import prisma from '../utils/prisma.js'
+
+export async function stats(req, res, next) { try { const propertyWhere = req.user.role === 'ADMIN' ? {} : { ownerId: req.user.id }; const [totalProperties, activeProperties, totalInquiries, totalUsers] = await Promise.all([prisma.property.count({ where: propertyWhere }), prisma.property.count({ where: { ...propertyWhere, status: 'AVAILABLE' } }), prisma.inquiry.count({ where: req.user.role === 'ADMIN' ? {} : { property: { ownerId: req.user.id } } }), prisma.user.count()]); res.json({ stats: { totalProperties, activeProperties, totalInquiries, totalUsers: req.user.role === 'ADMIN' ? totalUsers : null } }) } catch (error) { next(error) } }

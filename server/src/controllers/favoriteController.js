@@ -1,0 +1,5 @@
+import prisma from '../utils/prisma.js'
+
+export async function listFavorites(req, res, next) { try { const favorites = await prisma.favorite.findMany({ where: { userId: req.user.id }, include: { property: { include: { images: true, owner: { select: { id: true, name: true, email: true } } } } }, orderBy: { createdAt: 'desc' } }); res.json({ favorites }) } catch (error) { next(error) } }
+export async function addFavorite(req, res, next) { try { const property = await prisma.property.findUnique({ where: { id: req.params.propertyId } }); if (!property) return res.status(404).json({ message: 'Property not found.' }); const favorite = await prisma.favorite.upsert({ where: { userId_propertyId: { userId: req.user.id, propertyId: req.params.propertyId } }, update: {}, create: { userId: req.user.id, propertyId: req.params.propertyId } }); res.status(201).json({ favorite }) } catch (error) { next(error) } }
+export async function removeFavorite(req, res, next) { try { await prisma.favorite.deleteMany({ where: { userId: req.user.id, propertyId: req.params.propertyId } }); res.status(204).end() } catch (error) { next(error) } }
