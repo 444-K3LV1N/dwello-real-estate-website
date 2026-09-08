@@ -1,10 +1,15 @@
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+
 export default defineConfig({
   plugins: [react()],
-  resolve: { dedupe: ['react', 'react-dom'] },
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
   server: {
     proxy: {
-      '/api': 'http://localhost:4000'
+      '/api': 'http://localhost:4000',
     },
-    allowedHosts: ['dwello-frontend-fjru.onrender.com']
-  }
+    allowedHosts: ['dwello-frontend-fjru.onrender.com'],
+  },
 })
