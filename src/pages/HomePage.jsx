@@ -374,12 +374,14 @@ export default function HomePage() {
             <em>place in the world.</em>
           </h2>
 
-          <a
-            className="button button-accent"
-            href={`mailto:${siteConfig.contactEmail}`}
-          >
-            Talk to {siteConfig.name} <ArrowUpRight />
-          </a>
+       <a
+  className="button button-accent"
+  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${siteConfig.contactEmail}`}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Talk to {siteConfig.name} <ArrowUpRight />
+</a>
         </section>
       </main>
 

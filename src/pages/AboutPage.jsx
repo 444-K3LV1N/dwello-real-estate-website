@@ -97,12 +97,14 @@ export default function AboutPage() {
               Explore Properties <ArrowUpRight />
             </Link>
 
-            <a
-              className="button button-light"
-              href={`mailto:${siteConfig.contactEmail}`}
-            >
-              Talk to {siteConfig.name} <ArrowUpRight />
-            </a>
+          <a
+  className="button button-light"
+  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${siteConfig.contactEmail}`}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Talk to {siteConfig.name} <ArrowUpRight />
+</a>
           </div>
         </section>
       </main>
