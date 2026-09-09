@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import AboutPage from './pages/AboutPage'
 import DashboardPage from './pages/DashboardPage'
+import InquiriesPage from './pages/InquiriesPage'
 import FavoritesPage from './pages/FavoritesPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
@@ -45,6 +46,15 @@ export default function App() {
             element={
               <ProtectedRoute staffOnly>
                 <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/inquiries"
+            element={
+              <ProtectedRoute staffOnly>
+                <InquiriesPage />
               </ProtectedRoute>
             }
           />

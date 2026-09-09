@@ -393,6 +393,12 @@ export default function DashboardPage() {
 
             <div className="panel-heading inquiries-heading">
               <h2>Recent inquiries</h2>
+
+              {user.role === 'ADMIN' && (
+                <Link to="/dashboard/inquiries">
+                  View all inquiries
+                </Link>
+              )}
             </div>
 
             <div className="managed-list">
@@ -406,7 +412,7 @@ export default function DashboardPage() {
                     <b>{inquiry.name}</b>
 
                     <small>
-                      {inquiry.property.title} ·{' '}
+                      {inquiry.property?.title || 'Property unavailable'} ·{' '}
                       {inquiry.email}
                     </small>
 
