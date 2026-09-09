@@ -7,56 +7,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  AGENT
-  ADMIN
-}
-
-enum PropertyStatus {
-  AVAILABLE
-  SOLD
-  RENTED
-  DRAFT
-}
-
 model User {
-  id         String      @id @default(cuid())
+  id         String     @id @default(cuid())
   name       String
-  email      String      @unique
+  email      String     @unique
   password   String
-  role       Role        @default(USER)
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  properties Property[]
-  inquiries  Inquiry[]
+  role       Role       @default(USER)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   favorites  Favorite[]
+  inquiries  Inquiry[]
+  properties Property[]
 
   @@index([role])
 }
 
 model Property {
-  id          String         @id @default(cuid())
-  title       String
-  description String
-  price       Decimal        @db.Decimal(15, 2)
-  location    String
-  city        String
-  state       String
+  id           String          @id @default(cuid())
+  title        String
+  description  String
+  price        Decimal         @db.Decimal(15, 2)
+  location     String
+  city         String
+  state        String
   propertyType String
-  bedrooms    Int?
-  bathrooms   Int?
-  area        Decimal?       @db.Decimal(12, 2)
-  image       String
-  status      PropertyStatus  @default(AVAILABLE)
-  featured    Boolean        @default(false)
-  ownerId     String
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-  owner       User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  images      PropertyImage[]
-  inquiries   Inquiry[]
-  favorites   Favorite[]
+  bedrooms     Int?
+  bathrooms    Int?
+  area         Decimal?        @db.Decimal(12, 2)
+  image        String
+  status       PropertyStatus  @default(AVAILABLE)
+  featured     Boolean         @default(false)
+  ownerId      String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  favorites    Favorite[]
+  inquiries    Inquiry[]
+  owner        User            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  images       PropertyImage[]
 
   @@index([city, state])
   @@index([propertyType])
@@ -96,9 +83,22 @@ model Favorite {
   userId     String
   propertyId String
   createdAt  DateTime @default(now())
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, propertyId])
   @@index([propertyId])
+}
+
+enum Role {
+  USER
+  AGENT
+  ADMIN
+}
+
+enum PropertyStatus {
+  AVAILABLE
+  SOLD
+  RENTED
+  DRAFT
 }
